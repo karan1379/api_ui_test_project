@@ -1,9 +1,15 @@
+import 'package:api_ui_test_project/helper/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class VerificationScreen extends StatelessWidget {
+
+
    VerificationScreen({Key? key}) : super(key: key);
 
+   TextEditingController  verifyController =TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,10 +32,55 @@ class VerificationScreen extends StatelessWidget {
                 fontSize: 14,fontWeight:FontWeight.w600
             ),),
           ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 0.5),
+              borderRadius: BorderRadius.all(Radius.circular(25),),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+            alignment: Alignment.center,
+            child: PinCodeTextField(
+
+              autoDisposeControllers: false,
+              appContext: Get.context!,
+              controller: verifyController,
+              keyboardType: TextInputType.phone,
+              hintCharacter: "-",
+              hintStyle: const TextStyle(
+                  fontSize: 30, fontWeight: FontWeight.w600,
+                  color: Colors.grey
+              ),
+              length: 6,
+              animationType: AnimationType.fade,
+              pinTheme: PinTheme(
+
+                borderWidth: 1,
+                activeFillColor: Colors.white,
+                activeColor: Colors.black,
+                inactiveFillColor: Colors.white,
+                 shape: PinCodeFieldShape.box,
+                inactiveColor: Colors.black,
+                selectedColor: Colors.black,
+                selectedFillColor: Colors.white,
+
+                borderRadius: BorderRadius.circular(10),
+                fieldHeight: 50,
+                fieldWidth: 40,
+              ),
+              animationDuration: const Duration(milliseconds: 300),
+              enableActiveFill: false,
+              beforeTextPaste: (text) {
+                return true;
+              }, onChanged: (String value) {
+
+            },
+            ),
+          ),
           InkWell(
             onTap: ()
             {
               // controller.googleLogin();
+              Get.toNamed(Routes.welcome);
             },
             child: Container(
               width: MediaQuery.of(context).size.width,

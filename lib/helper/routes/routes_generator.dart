@@ -2,6 +2,7 @@
 import 'package:api_ui_test_project/helper/routes/routes.dart';
 import 'package:api_ui_test_project/login_module/login_screen.dart';
 import 'package:api_ui_test_project/login_module/verification_screen.dart';
+import 'package:api_ui_test_project/login_module/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,6 +23,8 @@ class RoutesGenerator{
         break;
       case Routes.verification:
         widgetScreen = VerificationScreen();
+        break;case Routes.welcome:
+        widgetScreen = WelcomeScreen();
         break;
       default:
         widgetScreen = _errorRoute();
