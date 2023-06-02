@@ -58,6 +58,7 @@ class LoginScreen extends StatelessWidget {
                    ),
                    Flexible(
                      child: TextFormField(
+                       controller: phoneNumberController,
                        textAlign: TextAlign.center,
                        style:const  TextStyle(
                            color: Colors.black,
@@ -92,7 +93,8 @@ class LoginScreen extends StatelessWidget {
              InkWell(
                onTap: (){
                 // controller.googleLogin();
-                 Get.toNamed(Routes.verification);
+                //  Get.toNamed(Routes.verification);
+                 controller.signIn(phoneNumberController.text);
                },
                child: Container(
                  width: MediaQuery.of(context).size.width,

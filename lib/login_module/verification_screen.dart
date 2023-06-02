@@ -1,4 +1,5 @@
 import 'package:api_ui_test_project/helper/routes/routes.dart';
+import 'package:api_ui_test_project/login_module/loginController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -6,7 +7,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 class VerificationScreen extends StatelessWidget {
 
-
+ final controller=Get.put(LoginController());
    VerificationScreen({Key? key}) : super(key: key);
 
    TextEditingController  verifyController =TextEditingController();
@@ -71,16 +72,16 @@ class VerificationScreen extends StatelessWidget {
               enableActiveFill: false,
               beforeTextPaste: (text) {
                 return true;
-              }, onChanged: (String value) {
-
-            },
+              }, onChanged: (String value) {},
             ),
           ),
           InkWell(
             onTap: ()
             {
               // controller.googleLogin();
-              Get.toNamed(Routes.welcome);
+              // Get.toNamed(Routes.welcome);
+              controller.verifyOtp(verifyController.text);
+
             },
             child: Container(
               width: MediaQuery.of(context).size.width,

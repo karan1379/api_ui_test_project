@@ -1,5 +1,6 @@
 
 import 'package:api_ui_test_project/helper/routes/routes.dart';
+import 'package:api_ui_test_project/login_module/home_screen.dart';
 import 'package:api_ui_test_project/login_module/login_screen.dart';
 import 'package:api_ui_test_project/login_module/verification_screen.dart';
 import 'package:api_ui_test_project/login_module/welcome_screen.dart';
@@ -23,8 +24,12 @@ class RoutesGenerator{
         break;
       case Routes.verification:
         widgetScreen = VerificationScreen();
-        break;case Routes.welcome:
+        break;
+        case Routes.welcome:
         widgetScreen = WelcomeScreen();
+        break;
+      case Routes.home:
+        widgetScreen = HomeScreen();
         break;
       default:
         widgetScreen = _errorRoute();

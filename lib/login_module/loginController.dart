@@ -1,6 +1,12 @@
 
+import 'dart:convert';
+
+import 'package:api_ui_test_project/api_constants.dart';
+import 'package:api_ui_test_project/helper/routes/routes.dart';
 import 'package:api_ui_test_project/helper/shared_prefrence_helper.dart';
+import 'package:api_ui_test_project/model/user_model.dart';
 import 'package:ccp_dialog/country_picker/country.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 
@@ -9,6 +15,8 @@ class LoginController extends GetxController{
    late SharedPreferenceHelper preferenceHelper;
    Rx<Country> selectedCountry = Country.IN.obs;
    var countryCode = "+91".obs;
+   Dio dio = Dio();
+   final userModel = Rxn<UserModel>();
 
    @override
   void onInit() {
@@ -24,32 +32,62 @@ class LoginController extends GetxController{
    }
 
 
-  /*Future<void> googleLogin() async {
-     GoogleSignIn _googleSignIn = GoogleSignIn();
+   Future<UserModel?> signIn(String phoneNumber) async {
      try {
-       var alreadySign = await _googleSignIn.isSignedIn();
-       // debugPrint("already sign $alreadySign");
-       if(alreadySign){
-         await _googleSignIn.signOut();
-         googleLogin();
-       }else{
-         var result = await _googleSignIn.signIn();
-         print(result!.displayName);
-         print(result.email);
-         print(result.photoUrl);
-         if (result != null)
-         {
-           // loginController.socialLogin(result.id, "google", result.email, result.displayName.toString(), "jhh");
-           Get.offAllNamed(Routes.home);
-           preferenceHelper.saveUserName(result.displayName.toString());
-           preferenceHelper.saveIsLoggedIn(true);
-
-         }
+       var response = await dio.get(ApiConstants.signIn,
+         data:
+         {"mobile": phoneNumber,},);
+       if (response.statusCode == 200) {
+         userModel.value=UserModel.fromJson(jsonDecode(response.data));
+         // userModel.value?.status;
+         Get.toNamed(Routes.verification);
+       } else {
+         Get.showSnackbar(const GetSnackBar(message: "Error",));
        }
-     } catch (error) {
-       print(error);
+     } catch (e) {
+       print(e.toString());
      }
-   }*/
+     return null;
+   }
+
+   Future<UserModel?> verifyOtp(String otp) async {
+     try {
+       var response = await dio.post(ApiConstants.verifyOTP,
+         data: {"request_id": "0987654321","code":otp},);
+       if (response.statusCode == 200) {
+         userModel.value=UserModel.fromJson(jsonDecode(response.data));
+         Get.toNamed(Routes.welcome);
+       } else {
+         Get.showSnackbar(const GetSnackBar(message: "Error",));
+       }
+     } catch (e) {
+       print(e.toString());
+     }
+     return null;
+   }
+
+   Future<UserModel?> addDetails(String name,String email) async {
+     try {
+       var response = await dio.get(ApiConstants.verifyOTP,
+         data: {"name": name,"email":email},
+           options: Options(
+             headers: {
+               'Token': 'jwt1235',
+             },
+           ));
+       if (response.statusCode == 200) {
+         // userModel.value=UserModel.fromJson(jsonDecode(response.data));
+         Get.toNamed(Routes.home);
+       } else {
+         Get.showSnackbar(const GetSnackBar(message: "Error",));
+       }
+     } catch (e) {
+       print(e.toString());
+     }
+     return null;
+   }
+
+
 
 
 }
