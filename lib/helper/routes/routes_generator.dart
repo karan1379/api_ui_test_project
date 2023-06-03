@@ -23,7 +23,7 @@ class RoutesGenerator{
         widgetScreen = LoginScreen();
         break;
       case Routes.verification:
-        widgetScreen = VerificationScreen();
+        widgetScreen = VerificationScreen(phoneNumber: args as String,);
         break;
         case Routes.welcome:
         widgetScreen = WelcomeScreen();

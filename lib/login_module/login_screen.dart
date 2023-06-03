@@ -1,5 +1,6 @@
 
 import 'package:api_ui_test_project/helper/routes/routes.dart';
+import 'package:api_ui_test_project/helper/utils.dart';
 import 'package:api_ui_test_project/login_module/loginController.dart';
 import 'package:ccp_dialog/country_picker/flutter_country_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -94,6 +95,22 @@ class LoginScreen extends StatelessWidget {
                onTap: (){
                 // controller.googleLogin();
                 //  Get.toNamed(Routes.verification);
+                 if(phoneNumberController.text.isEmpty){
+                   Utils.errorSnackBar("Please Enter Phone Number");
+                   return;
+                 }
+                 if(phoneNumberController.text.length<10){
+                   Utils.errorSnackBar("Please Enter Valid Phone Number");
+                   return;
+                 }
+                 // if(emailController.text.trim().isEmpty){
+                 //   Utils.errorSnackBar("Please Enter Email");
+                 //   return;
+                 // }
+                 // if(!Utils.emailValidation(emailController.text)){
+                 //   Utils.errorSnackBar("Please Enter valid Email");
+                 //   return;
+                 // }
                  controller.signIn(phoneNumberController.text);
                },
                child: Container(

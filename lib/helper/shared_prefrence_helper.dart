@@ -4,8 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferenceHelper {
   static late SharedPreferences _prefsInstance;
   var _prefs;
-  static const String _isLoggedIn = "isLoggedIn";
-  static const String _userName = "userName";
+  static const String _requestId = "requestId";
 
   static final SharedPreferenceHelper _singleton =
   SharedPreferenceHelper._internal();
@@ -47,22 +46,13 @@ class SharedPreferenceHelper {
     _prefsInstance.clear();
   }
 
-
-  bool getIsLoggedIn() {
-    return _getPref(_isLoggedIn) ?? false;
-  }
-
-  void saveIsLoggedIn(bool value) {
-    _savePref(_isLoggedIn, value);
-  }
-
-  void saveUserName(String value){
-    _savePref(_userName, value);
+  void saveRequestId(String value){
+    _savePref(_requestId, value);
 
   }
 
-   String getUserName() {
-    return _getPref(_userName) ?? "";
+  String getRequestId() {
+    return _getPref(_requestId) ?? "";
   }
 
 }
